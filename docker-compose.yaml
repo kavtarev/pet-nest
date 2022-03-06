@@ -1,0 +1,26 @@
+version: '3.9'
+services:
+  postgres:
+    build: ./postgres
+    ports:
+      - "29901:5432"
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=qwe123
+    volumes:
+      - ~/my-nest-postgres:/var/lib/postgresql/data
+
+  backend:
+    build: ./backend
+    volumes:
+      - type: bind
+        source: ./backend/src
+        target: /app/src
+    ports:
+      - "3100:3100"
+    depends_on:
+      - postgres
+    restart: always
+    environment:
+      - TSC_WATCHFILE=UseFsEvents
+      - TYPEORM_HOST=postgres
