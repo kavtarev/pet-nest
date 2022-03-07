@@ -9,7 +9,7 @@ export class AuthController {
     private readonly authUseCase: AuthUseCase
   ) { }
   @Get()
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   async getUser() {
     return 'users'
   }

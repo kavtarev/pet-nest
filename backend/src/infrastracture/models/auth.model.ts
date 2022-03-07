@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { UserTaskModel } from "./user-task.model";
 
 @Entity()
 export class AuthModel {
@@ -10,6 +11,9 @@ export class AuthModel {
 
   @Column()
   password: string;
+
+  @OneToMany(() => UserTaskModel, task => task.user)
+  public task: UserTaskModel[]
 
   @UpdateDateColumn()
   updateDate: Date;

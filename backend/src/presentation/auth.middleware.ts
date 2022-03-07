@@ -29,7 +29,7 @@ export class AuthCheck implements NestMiddleware {
     }
 
     console.log(user);
-
+    req.body.id = user.id
     next();
   }
 }

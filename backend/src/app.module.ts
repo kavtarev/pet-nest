@@ -1,3 +1,7 @@
+import { UserTaskRepo } from './infrastracture/peros/user-task.repo';
+import { CreateQuestUseCase } from './application/User/create-quest.use-case';
+import { UserController } from './presentation/user.controller';
+import { StorageRepo } from './infrastracture/peros/storageRepo';
 import { AuthUseCase } from './application/auth-use-case';
 import { JwtStrategy } from './application/jtw-service';
 import { AppRepository } from './infrastracture/peros/app.repository';
@@ -10,8 +14,9 @@ import { AuthController } from './presentation/auth.controller';
 import { AuthRepo } from './infrastracture/peros/auth.repository';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtAuthGuard } from './application/autg.guard';
-import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
+import { Module, NestModule, MiddlewareConsumer, RequestMethod } from '@nestjs/common';
 import { AuthCheck } from './presentation/auth.middleware';
+import { UserQuestRepo } from './infrastracture/peros/user-quest.repo';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -25,20 +30,38 @@ import { AuthCheck } from './presentation/auth.middleware';
       synchronize: true,
       logging: true,
     }),
-    TypeOrmModule.forFeature([models.AppModel, models.RoleModel, models.AuthModel]),
+    TypeOrmModule.forFeature([
+      models.AppModel,
+      models.RoleModel,
+      models.AuthModel,
+      models.UserQuestModel,
+      models.UserTaskModel,
+    ]),
     JwtModule.register({
       secret: 'secret',
       signOptions: { expiresIn: '60000s' },
     }),
     HttpModule,
   ],
-  controllers: [AppController, AuthController],
-  providers: [AppUseCase, AppRepository, AuthRepo, JwtStrategy, AuthUseCase, JwtAuthGuard],
+  controllers: [AppController, AuthController, UserController],
+  providers: [
+    AppUseCase,
+    AppRepository,
+    AuthRepo,
+    JwtStrategy,
+    AuthUseCase,
+    JwtAuthGuard,
+    StorageRepo,
+    UserQuestRepo,
+    CreateQuestUseCase,
+    UserTaskRepo,
+  ],
 })
 export class App implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(AuthCheck)
-      .forRoutes(AuthController);
+      // .exclude('auth(.*)')
+      .forRoutes({ path: '*', method: RequestMethod.ALL });
   }
 }
