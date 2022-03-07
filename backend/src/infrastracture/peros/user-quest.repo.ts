@@ -13,4 +13,8 @@ export class UserQuestRepo {
   async create(userQuest: model.UserQuestModel) {
     return this.userQuestRepoData.save(userQuest)
   }
+
+  async checkIfExists(questId: string, userId: string) {
+    return this.userQuestRepoData.find({ where: { questId, userId } })
+  }
 }

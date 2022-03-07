@@ -15,6 +15,14 @@ export class StorageRepo implements OnModuleInit {
     return this.storage.getQuestById(id)
   }
 
+  getQuestNodes() {
+    return this.storage.getQuestNodes()
+  }
+
+  findNodeById(id: string) {
+    return this.getQuestNodes().find(task => task.id === id)
+  }
+
   initialize() {
     this.storage = new Storage(INITIAL_JSON)
   }

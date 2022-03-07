@@ -39,4 +39,16 @@ export class UserQuestEntity {
       })
     })
   }
+
+  start(tasks: UserTask[]) {
+    const ids = []
+    tasks.forEach(task => {
+      ids.push(...task.task.children)
+    })
+    tasks.forEach(task => {
+      if (!ids.includes(task.task.id)) {
+        task.status = UserTaskStatus.AVAILABLBE
+      }
+    })
+  }
 }

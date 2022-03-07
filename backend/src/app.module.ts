@@ -1,3 +1,4 @@
+import { UserFirstTaskUseCase } from './application/User/user-first-task.use-case';
 import { UserTaskRepo } from './infrastracture/peros/user-task.repo';
 import { CreateQuestUseCase } from './application/User/create-quest.use-case';
 import { UserController } from './presentation/user.controller';
@@ -55,6 +56,7 @@ import { UserQuestRepo } from './infrastracture/peros/user-quest.repo';
     UserQuestRepo,
     CreateQuestUseCase,
     UserTaskRepo,
+    UserFirstTaskUseCase,
   ],
 })
 export class App implements NestModule {

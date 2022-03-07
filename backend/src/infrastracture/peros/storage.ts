@@ -13,6 +13,9 @@ export class Storage {
   getQuest() {
     return this.quest
   }
+  getQuestNodes() {
+    return this.quest.flatMap(quest => quest.getTasks())
+  }
 
   getQuestById(id: string): QuestEntity {
     return this.quest.find((quest) => quest.id === id)

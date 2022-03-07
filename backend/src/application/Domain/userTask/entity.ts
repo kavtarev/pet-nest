@@ -17,7 +17,7 @@ export class UserTask {
   @Transform(({ value }) => value.id)
   @Type(() => Task)
   public readonly task!: Task;
-  public readonly status: UserTaskStatus
+  public status: UserTaskStatus
   public data: any
 
   constructor(params: UserTaskParams) {
@@ -26,5 +26,17 @@ export class UserTask {
 
   getData() {
     return this.data
+  }
+
+  start() {
+    this.status = UserTaskStatus.AVAILABLBE
+  }
+
+  finish() {
+    this.status = UserTaskStatus.FINISHED
+  }
+
+  setData(data: any) {
+    this.data = { ...this.data, ...data }
   }
 }

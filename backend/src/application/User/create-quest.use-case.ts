@@ -5,7 +5,7 @@ import { UserQuestStatus } from '../../common/interface';
 import { AuthRepo } from './../../infrastracture/peros/auth.repository';
 import { Quest } from './../../infrastracture/initial-json/initial-config';
 import { StorageRepo } from './../../infrastracture/peros/storageRepo';
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { ConflictException, Injectable, NotAcceptableException, NotFoundException } from "@nestjs/common";
 import { nanoid } from 'nanoid'
 import { UserQuestRepo } from 'src/infrastracture/peros/user-quest.repo';
 
@@ -31,6 +31,12 @@ export class CreateQuestUseCase {
       throw new NotFoundException('no such quest')
     }
 
+    const isExists = await this.userQuestRepo.checkIfExists(questId, userId)
+
+    if (isExists.length !== 0) {
+      throw new NotAcceptableException("already have one")
+    }
+
     const userQuest = new UserQuestEntity({
       id: nanoid(),
       questId: quest.id,
@@ -40,7 +46,8 @@ export class CreateQuestUseCase {
     })
 
     const userTasks = userQuest.createUserTasks()
-    await this.userTaskRepo.save(user, userTasks)
+    userQuest.start(userTasks)
+    await this.userTaskRepo.save(userTasks)
 
     return this.userQuestRepo.create(userQuest)
 

@@ -1,3 +1,4 @@
+import { StorageRepo } from './storageRepo';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from "@nestjs/common";
 import * as model from './../models'
@@ -12,29 +13,34 @@ export class UserTaskRepo {
     private readonly userTaskDataRepo: Repository<model.UserTaskModel>,
 
     @InjectRepository(model.AuthModel)
-    private readonly userAuthDataRepo: Repository<model.AuthModel>
+    private readonly userAuthDataRepo: Repository<model.AuthModel>,
+
+    private readonly storageRepo: StorageRepo
   ) { }
 
-  async save(user, userTasks: UserTask[]) {
-    await getManager().transaction(async (transactionalEntityManager) => {
-      await transactionalEntityManager.save(user);
-      await transactionalEntityManager.save(this.mapToModel(userTasks));
-    });
-    // await this.userTaskDataRepo.save(tasks)
+  async saveOne(userTask: UserTask) {
+    await this.userTaskDataRepo.save(this.mapToModel(userTask))
   }
 
-  mapToModel(tasks: UserTask[]): model.UserTaskModel[] {
-    return tasks.map(task => {
-      return plainToClass(model.UserTaskModel, instanceToPlain(task));
-    })
-    // return tasks.map(task => {
-    //   return {
-    //     id: task.id,
-    //     status: task.status,
-    //     userId: task.userId,
-    //     taskId: task.task.id,
-    //     data: task.data
-    //   }
-    // })
+  async save(userTasks: UserTask[]) {
+    await this.userTaskDataRepo.save(userTasks.map(task => this.mapToModel(task)))
+  }
+
+  async findOneByUserId(userId: string, taskId: string) {
+    const task = await this.userTaskDataRepo.findOne({ where: { userId, taskId } })
+    return this.mapToDomain(task)
+  }
+
+  mapToDomain(userTask: model.UserTaskModel) {
+    const taskNode = this.storageRepo.findNodeById(userTask.taskId)
+    return new UserTask({ ...userTask, task: taskNode })
+  }
+
+  mapToModel(task: UserTask): model.UserTaskModel {
+    return plainToClass(model.UserTaskModel, instanceToPlain(task));
+  }
+
+  createUserTask() {
+
   }
 }
