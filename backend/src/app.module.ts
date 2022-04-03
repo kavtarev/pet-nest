@@ -18,6 +18,8 @@ import { JwtAuthGuard } from './application/autg.guard';
 import { Module, NestModule, MiddlewareConsumer, RequestMethod } from '@nestjs/common';
 import { AuthCheck } from './presentation/auth.middleware';
 import { UserQuestRepo } from './infrastracture/peros/user-quest.repo';
+import { RandomModule } from './random-module/app.module';
+import { RandomModel } from './random-module/infrastructure/model';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -26,8 +28,15 @@ import { UserQuestRepo } from './infrastracture/peros/user-quest.repo';
       username: 'ivan',
       password: '123qwe',
       database: 'ivan',
-      // entities: [models.AppModel, models.RoleModel, models.AuthModel],
-      entities: ['./dist/infrastracture/**/*.js'],
+      entities: [
+        models.AppModel,
+        models.RoleModel,
+        models.AuthModel,
+        models.UserQuestModel,
+        models.UserTaskModel,
+        RandomModel,
+      ],
+      // entities: ['./dist/infrastracture/**/*.js'],
       synchronize: true,
       logging: true,
     }),
@@ -37,12 +46,15 @@ import { UserQuestRepo } from './infrastracture/peros/user-quest.repo';
       models.AuthModel,
       models.UserQuestModel,
       models.UserTaskModel,
+      RandomModel,
+
     ]),
     JwtModule.register({
       secret: 'secret',
       signOptions: { expiresIn: '60000s' },
     }),
     HttpModule,
+    RandomModule,
   ],
   controllers: [AppController, AuthController, UserController],
   providers: [
@@ -63,7 +75,7 @@ export class App implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(AuthCheck)
-      // .exclude('auth(.*)')
+      .exclude('auth(.*)', 'random(.*)')
       .forRoutes({ path: '*', method: RequestMethod.ALL });
   }
 }
