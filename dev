@@ -1,0 +1,6 @@
+#!/bin/bash
+
+export USERNAME=ivan
+export PASSWORD=123qwe
+export DATABASE=ivan
+export DB_TYPE=postgres

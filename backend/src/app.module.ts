@@ -20,8 +20,11 @@ import { AuthCheck } from './presentation/auth.middleware';
 import { UserQuestRepo } from './infrastracture/peros/user-quest.repo';
 import { RandomModule } from './random-module/app.module';
 import { RandomModel } from './random-module/infrastructure/model';
+import { ConfigModule } from '@nestjs/config';
+
 @Module({
   imports: [
+    ConfigModule.forRoot(), // todo
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.TYPEORM_HOST,
