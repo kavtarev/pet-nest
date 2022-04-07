@@ -1,0 +1,9 @@
+{ "type": "postgres",
+  "host": "postgres",
+  "username": "ivan",
+  "password": "123qwe",
+  "database": "ivan",
+  "entities": ["./dist/**/*.model{.ts,.js}"],
+  "synchronize": "true",
+  "logging": "true"
+  }

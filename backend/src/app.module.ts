@@ -24,25 +24,8 @@ import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(), // todo
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: process.env.TYPEORM_HOST,
-      username: 'ivan',
-      password: '123qwe',
-      database: 'ivan',
-      entities: [
-        models.AppModel,
-        models.RoleModel,
-        models.AuthModel,
-        models.UserQuestModel,
-        models.UserTaskModel,
-        RandomModel,
-      ],
-      // entities: ['./dist/infrastracture/**/*.js'],
-      synchronize: true,
-      logging: true,
-    }),
+    ConfigModule.forRoot(),
+    TypeOrmModule.forRoot(),
     TypeOrmModule.forFeature([
       models.AppModel,
       models.RoleModel,
@@ -50,7 +33,6 @@ import { ConfigModule } from '@nestjs/config';
       models.UserQuestModel,
       models.UserTaskModel,
       RandomModel,
-
     ]),
     JwtModule.register({
       secret: 'secret',
