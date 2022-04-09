@@ -13,7 +13,7 @@ COPY package*.json ./
 
 RUN npm i
 
-COPY tsconfig.json tsconfig.build.json nest-cli.json .eslintrc.js ormconfig.json ormconfigg.json ./
+COPY tsconfig.json tsconfig.build.json nest-cli.json .eslintrc.js ormconfig.json ./
 
 COPY src src/
 

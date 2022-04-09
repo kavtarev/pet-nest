@@ -21,11 +21,17 @@ import { UserQuestRepo } from './infrastracture/peros/user-quest.repo';
 import { RandomModule } from './random-module/app.module';
 import { RandomModel } from './random-module/infrastructure/model';
 import { ConfigModule } from '@nestjs/config';
-
+import { ConfigModuleCustom } from './config/config.module';
+import database from './config/config'
+import { DatabaseModule } from './database-module/database.module';
 @Module({
   imports: [
-    ConfigModule.forRoot(),
-    TypeOrmModule.forRoot(),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      load: [database]
+    }),
+    DatabaseModule,
+    // TypeOrmModule.forRoot(),
     TypeOrmModule.forFeature([
       models.AppModel,
       models.RoleModel,

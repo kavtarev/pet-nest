@@ -24,3 +24,12 @@ services:
     environment:
       - TSC_WATCHFILE=UseFsEvents
       - TYPEORM_HOST=postgres
+      - DATABASE_HOST=postgres
+      - DATABASE_PORT=5432
+      - DATABASE_USERNAME=ivan
+      - DATABASE_PASSWORD=123qwe
+      - DATABASE_DATABASE=ivan
+      - DATABASE_SYNC=true
+      - DATABASE_DROP_SCHEMA=false
+      - DATABASE_RUN_MIGRATIONS=true
+      - DATABASE_LOGGING=true
