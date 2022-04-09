@@ -24,6 +24,7 @@ import { ConfigModule } from '@nestjs/config';
 import { ConfigModuleCustom } from './config/config.module';
 import database from './config/config'
 import { DatabaseModule } from './database-module/database.module';
+import { CronModule } from './cron-module/cron-module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -46,6 +47,7 @@ import { DatabaseModule } from './database-module/database.module';
     }),
     HttpModule,
     RandomModule,
+    CronModule,
   ],
   controllers: [AppController, AuthController, UserController],
   providers: [
