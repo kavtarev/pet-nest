@@ -10,5 +10,4 @@ export class CronUsecase {
   handleCron() {
     this.logger.verbose('Called when the current second is 45');
   }
-
 }

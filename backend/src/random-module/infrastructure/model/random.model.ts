@@ -12,7 +12,7 @@ export class RandomModel extends DatabaseModel {
   public randomNumber: number;
 
   @Column('varchar', { nullable: true })
-  public randomString: number
+  public randomString: string
 
   @Column('uuid', { nullable: true })
   public randomUuid: string

@@ -12,6 +12,7 @@ export class RandomController {
   public async insertData(
     @Body() body: RandomControllerDto
   ) {
-    return this.randomUsecase.addRandom(body)
+    const result = await this.randomUsecase.addRandom(body)
+    return result
   }
 }

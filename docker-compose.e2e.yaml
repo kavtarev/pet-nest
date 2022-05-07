@@ -1,6 +1,6 @@
 version: '3.9'
 services:
-  postgres:
+  postgres_test:
     build: ./postgres
     ports:
       - "29901:5432"
@@ -8,9 +8,9 @@ services:
     environment:
       - POSTGRES_PASSWORD=qwe123
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - db_data_test:/var/lib/postgresql/data
 
-  backend:
+  backend_test:
     build: ./backend
     volumes:
       - type: bind
@@ -19,7 +19,7 @@ services:
     ports:
       - "3100:3100"
     depends_on:
-      - postgres
+      - postgres_test
     restart: always
     environment:
       - TSC_WATCHFILE=UseFsEvents
@@ -34,5 +34,11 @@ services:
       - DATABASE_RUN_MIGRATIONS=true
       - DATABASE_LOGGING=true
 
+    command:
+      - sh
+      - -c
+      - |
+        (npm run test:e2e)
 volumes:
-  db_data:
+  db_data_test:
+
