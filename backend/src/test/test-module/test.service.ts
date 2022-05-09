@@ -1,3 +1,4 @@
+import { RandomModule } from './../../random-module/app.module';
 import { RandomUsecase } from './../../random-module/application/randomUsecase/random.use-case';
 import { RandomModel } from './../../random-module/infrastructure/model/random.model';
 import { RandomController } from './../../random-module/presentation/randomController';
@@ -18,9 +19,8 @@ export const setup = async (
   routes: string[]
 ) => {
     const moduleRef = await Test.createTestingModule({
-      imports,
-    providers:[RandomRepository, RandomUsecase],
-    controllers: [RandomController]
+     imports: [...imports,
+      ...modules ],
     }).compile();
 
     const app = moduleRef.createNestApplication();
