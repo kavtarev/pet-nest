@@ -7,7 +7,7 @@ import { Quest } from './../../infrastracture/initial-json/initial-config';
 import { StorageRepo } from './../../infrastracture/peros/storageRepo';
 import { ConflictException, Injectable, NotAcceptableException, NotFoundException } from "@nestjs/common";
 import { nanoid } from 'nanoid'
-import { UserQuestRepo } from 'src/infrastracture/peros/user-quest.repo';
+import { UserQuestRepo } from './../../infrastracture/peros/user-quest.repo';
 
 @Injectable()
 export class CreateQuestUseCase {

@@ -1,6 +1,6 @@
 import { AuthUserDto } from './../presentation/dto/auth.user.dto';
 import { Injectable } from "@nestjs/common";
-import { AuthRepo } from "src/infrastracture/peros/auth.repository";
+import { AuthRepo } from "./../infrastracture/peros/auth.repository";
 import { JwtService } from '@nestjs/jwt';
 
 @Injectable()

@@ -2,7 +2,7 @@ import { UserQuestStatus } from '../../../common/interface';
 import { QuestEntity } from './../quest/entity';
 import { nanoid } from 'nanoid'
 import { UserTask } from '../userTask/entity';
-import { UserTaskStatus } from 'src/common/user-task-status';
+import { UserTaskStatus } from './../../../common/user-task-status';
 
 interface IuserQuest {
   id: string,

@@ -2,7 +2,7 @@ import { JwtService } from '@nestjs/jwt';
 
 import { Injectable, NestMiddleware, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
-import { AuthRepo } from 'src/infrastracture/peros/auth.repository';
+import { AuthRepo } from './../infrastracture/peros/auth.repository';
 
 @Injectable()
 export class AuthCheck implements NestMiddleware {

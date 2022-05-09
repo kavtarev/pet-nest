@@ -1,7 +1,7 @@
 import { Entity } from 'typeorm';
 import { Column } from 'typeorm';
 import { PrimaryGeneratedColumn } from 'typeorm';
-import { DatabaseModel } from "src/random-module/application/domain/databaseModel";
+import { DatabaseModel } from "./../../application/domain/databaseModel";
 
 @Entity({ name: 'random' })
 export class RandomModel extends DatabaseModel {

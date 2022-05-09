@@ -25,30 +25,55 @@ import { ConfigModuleCustom } from './config/config.module';
 import database from './config/config'
 import { DatabaseModule } from './database-module/database.module';
 import { CronModule } from './cron-module/cron-module';
-@Module({
-  imports: [
-    ConfigModule.forRoot({
-      isGlobal: true,
-      load: [database]
-    }),
-    DatabaseModule,
-    // TypeOrmModule.forRoot(),
-    TypeOrmModule.forFeature([
+
+
+export const moduleTO = TypeOrmModule.forFeature([
+  RandomModel,
+])
+
+export const imports = [
+  TypeOrmModule.forRoot({
+    type: 'postgres',
+    host: process.env.TYPEORM_HOST,
+    username: 'ivan',
+    password: '123qwe',
+    database: 'ivan',
+    entities: [
       models.AppModel,
       models.RoleModel,
       models.AuthModel,
       models.UserQuestModel,
       models.UserTaskModel,
       RandomModel,
-    ]),
-    JwtModule.register({
-      secret: 'secret',
-      signOptions: { expiresIn: '60000s' },
-    }),
-    HttpModule,
-    RandomModule,
-    CronModule,
-  ],
+    ],
+    // entities: ['./dist/infrastracture/**/*.js'],
+    synchronize: true,
+    logging: true,
+  }),
+  // ConfigModule.forRoot({
+  //   isGlobal: true,
+  //   load: [database]
+  // }),
+  // DatabaseModule,
+  // TypeOrmModule.forRoot(),
+  TypeOrmModule.forFeature([
+    models.AppModel,
+    models.RoleModel,
+    models.AuthModel,
+    models.UserQuestModel,
+    models.UserTaskModel,
+    RandomModel,
+  ]),
+  JwtModule.register({
+    secret: 'secret',
+    signOptions: { expiresIn: '60000s' },
+  }),
+  HttpModule,
+  RandomModule,
+  CronModule,
+]
+@Module({
+  imports,
   controllers: [AppController, AuthController, UserController],
   providers: [
     AppUseCase,
@@ -64,11 +89,4 @@ import { CronModule } from './cron-module/cron-module';
     UserFirstTaskUseCase,
   ],
 })
-export class App implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(AuthCheck)
-      .exclude('auth(.*)', 'random(.*)')
-      .forRoutes({ path: '*', method: RequestMethod.ALL });
-  }
-}
+export class App {}

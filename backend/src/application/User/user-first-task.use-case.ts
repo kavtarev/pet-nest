@@ -1,6 +1,6 @@
 import { UserTaskRepo } from './../../infrastracture/peros/user-task.repo';
 import { BadRequestException, Injectable } from "@nestjs/common";
-import { UserTaskStatus } from 'src/common/user-task-status';
+import { UserTaskStatus } from './../../common/user-task-status';
 
 @Injectable()
 export class UserFirstTaskUseCase {

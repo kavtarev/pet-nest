@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from "@nestjs/common";
 import * as model from './../models'
 import { getManager, Repository } from 'typeorm';
-import { UserTask } from 'src/application/Domain/userTask/entity';
+import { UserTask } from './../../application/Domain/userTask/entity';
 import { classToPlain, instanceToPlain, plainToClass } from 'class-transformer';
 
 @Injectable()
@@ -38,9 +38,5 @@ export class UserTaskRepo {
 
   mapToModel(task: UserTask): model.UserTaskModel {
     return plainToClass(model.UserTaskModel, instanceToPlain(task));
-  }
-
-  createUserTask() {
-
   }
 }
