@@ -4,9 +4,8 @@ services:
     build: ./postgres
     ports:
       - "29901:5432"
-    restart: always
     environment:
-      - POSTGRES_PASSWORD=qwe123
+      - POSTGRES_PASSWORD=123qwe
     volumes:
       - db_data_test:/var/lib/postgresql/data
 
@@ -20,11 +19,10 @@ services:
       - "3100:3100"
     depends_on:
       - postgres_test
-    restart: always
     environment:
       - TSC_WATCHFILE=UseFsEvents
-      - TYPEORM_HOST=postgres
-      - DATABASE_HOST=postgres
+      - TYPEORM_HOST=postgres_test
+      - DATABASE_HOST=postgres_test
       - DATABASE_PORT=5432
       - DATABASE_USERNAME=ivan
       - DATABASE_PASSWORD=123qwe
